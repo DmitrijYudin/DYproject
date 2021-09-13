@@ -1,6 +1,7 @@
 /// <summary>
 /// Page Students (ID 50300).
 /// </summary>
+/// test commit 1
 page 50300 Students
 {
 
@@ -18,7 +19,7 @@ page 50300 Students
             {
                 field("No."; Rec."No.")
                 {
-                   // Visible = true;
+                    // Visible = true;
                     //ToolTip = 'Specifies the value of the No. field';
                     ApplicationArea = All;
                 }
