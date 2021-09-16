@@ -40,6 +40,36 @@ page 50300 Students
                 }
             }
         }
+
     }
 
+    actions
+    {
+        area(Processing)
+        {
+            action(CustomerCopy)
+            {
+                ApplicationArea = All;
+                Caption = 'Caption', comment = 'NLB="YourLanguageCaption"';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                //Image = Image;
+
+                trigger OnAction()
+                // var
+                //     StudentsLocal: Record Customer; 
+                //     StudentsTableLocal: Record StudentList;
+                begin
+                    // StudentsLocal.FindSet(true,true);
+                    // repeat
+                    //     StudentsTableLocal.Init();
+                    //     StudentsTableLocal.Name:=
+                    // until Rec.Next(1) = 0;
+                    Message('Customer Copy');
+                end;
+            }
+        }
+
+    }
 }
