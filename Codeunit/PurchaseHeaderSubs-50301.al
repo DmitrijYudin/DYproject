@@ -1,6 +1,3 @@
-/// <summary>
-/// Codeunit PurchaseHeaderSubs (ID 50301).
-/// </summary>
 codeunit 50301 PurchaseHeaderSubs
 {
     trigger OnRun()
@@ -8,13 +5,7 @@ codeunit 50301 PurchaseHeaderSubs
 
     end;
 
-    /// <summary>
-    /// VendorInvoiceNoOnValidate.
-    /// </summary>
-    /// <param name="Var Rec">Record "Purchase Header".</param>
-    /// <param name="xRec">Record "Purchase Header".</param>
     [EventSubscriber(ObjectType::Table, DataBase::"Purchase Header", 'OnAfterValidateEvent', 'Vendor Invoice No.', true, true)]
-    /// <param name="CurrFieldNo">Integer.</param>
     procedure VendorInvoiceNoOnValidate(Var Rec: Record "Purchase Header"; xRec: Record "Purchase Header"; CurrFieldNo: Integer)
     begin
         //Rec."Vendor Shipment No." := Rec."Vendor Invoice No.";
@@ -26,11 +17,8 @@ codeunit 50301 PurchaseHeaderSubs
         Message('"Vendor Invoice No."= %1 was changed to %2', xRec."Vendor Invoice No.", Rec."Vendor Invoice No.");
 
         Rec.Validate("CRM No.", Rec."Vendor Shipment No.");
+        //Rec."CRM No." := Rec."Vendor Shipment No."
+        //Rec.Modify()
 
     end;
-
-
-
-    var
-        myInt: Integer;
 }
