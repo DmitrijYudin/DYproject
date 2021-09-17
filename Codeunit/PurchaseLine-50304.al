@@ -10,7 +10,7 @@ codeunit 50304 PurchaseLineDelete50304
     procedure "PurchaseLineDelete"(Var Rec: Record "Purchase Line"; RunTrigger: Boolean)
     begin
 
-        Message('Purchase Line was deleted');
+        Message('Purchase Line No. "%1" was deleted', Rec."No.");
 
     end;
 }
