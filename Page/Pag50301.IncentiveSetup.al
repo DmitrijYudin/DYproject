@@ -14,7 +14,6 @@ page 50301 "Incentive Setup"
                 field("Sales Persone Code"; Rec."Sales Persone Code")
                 {
                     ApplicationArea = All;
-
                 }
                 field("Item Category Code"; Rec."Item Category Code")
                 {
@@ -151,6 +150,68 @@ page 50301 "Incentive Setup"
                     end else begin
                         Message('Sorry')
                     end;
+                end;
+            }
+
+            action("Delete all data")
+            {
+                ApplicationArea = All;
+                Caption = 'Delete all data';
+                trigger OnAction();
+                var
+                    IncentiveSetup: Record "Incentive Setup";
+                begin
+                    IncentiveSetup.Init();
+                    IncentiveSetup.DeleteAll();
+                end;
+            }
+
+            action("Temp 1")
+            {
+                ApplicationArea = All;
+                Caption = 'Temp 1';
+                trigger OnAction();
+                var
+                    IncentiveSetup1: Record "Incentive Setup";
+                    IncentiveSetup2: Record "Incentive Setup";
+                //IncentiveSetup1 и IncentiveSetup2 полные копии таблицы "Incentive Setup"
+                begin
+                    IncentiveSetup1.Init();
+                    IncentiveSetup2.Init();
+                    Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent")); //0
+                    Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent")); //0
+
+                    IncentiveSetup1.FindFirst();
+                    IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1 = 1
+                    IncentiveSetup1.Modify(); //в "Incentive Setup" переписали IncentiveSetup1 =1
+
+                    IncentiveSetup2.FindFirst();
+                    IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2 = 2
+                    IncentiveSetup2.Modify(); //в "Incentive Setup" переписали IncentiveSetup2 =2
+
+                    Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent"));// 1
+                    Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent"));// 2
+                    // в итоге: 
+                    // первая запись в таблице "Incentive Setup" = 2
+                    // первая запись в переменной IncentiveSetup1 = 1
+                    // первая запись в переменной IncentiveSetup2 = 2
+                    // на page выводится последняя модификация IncentiveSetup2 = 2
+                end;
+            }
+
+
+            action("Temp 1 Check")
+            {
+                ApplicationArea = All;
+                Caption = 'Temp 1 Check"';
+                trigger OnAction();
+                var
+                    IncentiveSetupCheck: Record "Incentive Setup";
+                begin
+                    IncentiveSetupCheck.Init();
+
+                    IncentiveSetupCheck.FindFirst();
+                    Message('IncentiveSetupCheck ' + Format(IncentiveSetupCheck."Incentive Pecent"));
                 end;
             }
         }
