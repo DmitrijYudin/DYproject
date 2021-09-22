@@ -166,10 +166,10 @@ page 50301 "Incentive Setup"
                 end;
             }
 
-            action("Temp 1")
+            action("Issue 1")
             {
                 ApplicationArea = All;
-                Caption = 'Temp 1';
+                Caption = 'Issue 1';
                 trigger OnAction();
                 var
                     IncentiveSetup1: Record "Incentive Setup";
@@ -198,18 +198,15 @@ page 50301 "Incentive Setup"
                     // на page выводится последняя модификация IncentiveSetup2 = 2
                 end;
             }
-
-
-            action("Temp 1 Check")
+            action("Issue 1 Check")
             {
                 ApplicationArea = All;
-                Caption = 'Temp 1 Check"';
+                Caption = 'Issue 1 Check';
                 trigger OnAction();
                 var
                     IncentiveSetupCheck: Record "Incentive Setup";
                 begin
                     IncentiveSetupCheck.Init();
-
                     IncentiveSetupCheck.FindFirst();
                     Message('IncentiveSetupCheck ' + Format(IncentiveSetupCheck."Incentive Pecent"));
                 end;
