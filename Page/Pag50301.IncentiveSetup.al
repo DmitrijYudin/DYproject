@@ -182,13 +182,15 @@ page 50301 "Incentive Setup"
 
                     IncentiveSetup1.FindFirst(); //нашли первую запись в IncentiveSetup1
                     IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1
-                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
+                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
                     Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent")); //1
                     Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent")); //0
 
                     IncentiveSetup2.FindFirst();//нашли первую запись в IncentiveSetup2
                     IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2."Incentive Pecent"= 2
+                    //IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
                     IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
+
                     Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent")); //1
                     Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent")); //2
                     // в итоге: 
