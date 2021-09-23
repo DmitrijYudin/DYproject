@@ -80,20 +80,25 @@ page 50301 "Incentive Setup"
                     ItemCategory: Record "Item Category";
                     IncentiveSetup: Record "Incentive Setup";
                 begin
-
-
-                    //SalesPersone.SetFilter(Code, '%1|%2', 'DY', 'AH');
+                    SalesPersone.Init();
+                    ItemCategory.Init();
+                    IncentiveSetup.Init();
+                    //Message(SalesPersone.Code + ': ' + SalesPersone.Name);
                     ItemCategory.SetFilter("Has Children", 'No');
+                    //Message(SalesPersone.Code + ': ' + SalesPersone.Name);
                     if SalesPersone.FindSet(true, true) then begin
+                        //Message(SalesPersone.Code + ': ' + SalesPersone.Name);
                         repeat
                             //Message(SalesPersone.Code + ': ' + SalesPersone.Name);
                             //ItemCategory.SetFilter("Has Children", 'No');
                             if ItemCategory.FindSet(true, true) then begin
+                                //Message('ItemCategory.Code' + ': ' + ItemCategory.Code);
                                 repeat
                                     //Message(ItemCategory.Code);
                                     IncentiveSetup.Init();
                                     IncentiveSetup."Sales Persone Code" := SalesPersone.Code;
                                     IncentiveSetup."Item Category Code" := ItemCategory.Code;
+                                    IncentiveSetup."Incentive Pecent" := 999;
                                     IncentiveSetup.Insert();
                                 Until ItemCategory.Next(1) = 0;
                             end else begin
@@ -174,36 +179,45 @@ page 50301 "Incentive Setup"
                 var
                     IncentiveSetup1: Record "Incentive Setup";
                     IncentiveSetup2: Record "Incentive Setup";
-                //IncentiveSetup1 и IncentiveSetup2 перменные типа RECORD которые похожи на таблицы и 
-                //являются полными копиями таблицы "Incentive Setup" где все "Incentive Pecent"=0
                 begin
                     IncentiveSetup1.Init();
                     IncentiveSetup2.Init();
 
-                    IncentiveSetup1.FindFirst(); //нашли первую запись в IncentiveSetup1
-                    IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1
-                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
-                    Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent")); //1
-                    Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent")); //0
+                    IncentiveSetup1.FindFirst();
+                    IncentiveSetup2.FindFirst();
 
-                    IncentiveSetup2.FindFirst();//нашли первую запись в IncentiveSetup2
+                    IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1                    
                     IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2."Incentive Pecent"= 2
-                    //IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
-                    IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
 
-                    Message('IncentiveSetup1 ' + Format(IncentiveSetup1."Incentive Pecent")); //1
-                    Message('IncentiveSetup2 ' + Format(IncentiveSetup2."Incentive Pecent")); //2
-                    // в итоге: 
-                    // первая запись в таблице "Incentive Setup" = 2
-                    // первая запись в переменной IncentiveSetup1 = 1
-                    // первая запись в переменной IncentiveSetup2 = 2
-                    // на page выводится последняя модификация IncentiveSetup2 = 2
+                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
+                    IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
                 end;
             }
-            action("Issue 1 Check")
+            action("Issue 2")
             {
                 ApplicationArea = All;
-                Caption = 'Issue 1 Check';
+                Caption = 'Issue 2';
+                trigger OnAction();
+                var
+                    IncentiveSetup1: Record "Incentive Setup";
+                    IncentiveSetup2: Record "Incentive Setup";
+                begin
+                    IncentiveSetup1.Init();
+                    IncentiveSetup2.Init();
+
+                    IncentiveSetup1.FindFirst();
+                    IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1                    
+                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
+
+                    IncentiveSetup2.FindFirst();
+                    IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2."Incentive Pecent"= 2
+                    IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
+                end;
+            }
+            action("First line Check")
+            {
+                ApplicationArea = All;
+                Caption = 'First line Check';
                 trigger OnAction();
                 var
                     IncentiveSetupCheck: Record "Incentive Setup";
