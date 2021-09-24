@@ -60,11 +60,11 @@ page 50301 "Incentive Setup"
                                     end;
                                 Until ItemCategory.Next(1) = 0;
                             end else begin
-                                Message('Sorry, but Item Category is empty. You Shoul create it first');
+                                Error('Sorry, but Item Category is empty. You Shoul create it first');
                             end;
                         Until SalesPersone.Next(1) = 0;
                     end else begin
-                        Message('Sorry, but Salesperson/Purchaser is empty. You Shoul create it first');
+                        Error('Sorry, but Salesperson/Purchaser is empty. You Shoul create it first');
                     end;
 
                 end;
@@ -102,11 +102,11 @@ page 50301 "Incentive Setup"
                                     IncentiveSetup.Insert();
                                 Until ItemCategory.Next(1) = 0;
                             end else begin
-                                Message('Sorry, but Item Category is empty. You Shoul create it first');
+                                Error('Sorry, but Item Category is empty. You Shoul create it first');
                             end;
                         Until SalesPersone.Next(1) = 0;
                     end else begin
-                        Message('Sorry, but Salesperson/Purchaser is empty. You Shoul create it first');
+                        Error('Sorry, but Salesperson/Purchaser is empty. You Shoul create it first');
                     end;
 
                 end;
@@ -134,7 +134,7 @@ page 50301 "Incentive Setup"
                             IncentiveSetup.Modify();
                         Until IncentiveSetup.Next() = 0;
                     end else begin
-                        Message('Sorry, but IncentiveSetup does not have DY and POPIT TOY');
+                        Error('Sorry, but IncentiveSetup does not have DY and POPIT TOY');
                     end;
 
                 end;
@@ -153,7 +153,7 @@ page 50301 "Incentive Setup"
                         IncentiveSetup."Incentive Pecent" := 10;
                         IncentiveSetup.Modify()
                     end else begin
-                        Message('Sorry')
+                        Error('Sorry. There are not DY and POPIT TOY set')
                     end;
                 end;
             }
