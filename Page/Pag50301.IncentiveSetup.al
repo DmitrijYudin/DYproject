@@ -197,14 +197,16 @@ page 50301 "Incentive Setup"
 
                     IncentiveSetup1.FindFirst();
                     IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1                    
-                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
 
-                    IncentiveSetup2.FindFirst();
+
+                    IncentiveSetup2.FindLast();
                     IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2."Incentive Pecent"= 2
+                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
                     IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
                 end;
             }
             action("Put 5% to STUFF else 7% by logic")
+            // bad idea!!!
             {
                 ApplicationArea = All;
                 Caption = 'Put 5% to STUFF else 7% by logic';
@@ -240,6 +242,7 @@ page 50301 "Incentive Setup"
             }
 
             action("Put 5% to STUFF else 7% by filters")
+            // good job!!
             {
                 ApplicationArea = All;
                 Caption = 'Put 5% to STUFF else 7% by filters';
@@ -247,26 +250,23 @@ page 50301 "Incentive Setup"
                 var
                     IncentiveSetup: Record "Incentive Setup";
                     ItemCategory: Record "Item Category";
-                    FindSTUFF: Boolean;
                 begin
-                    IncentiveSetup.Init();
-                    ItemCategory.Init();
-
                     ItemCategory.SetRange("Parent Category", 'STUFF');
-                    if ItemCategory.FindSet() then begin
+                    if ItemCategory.FindSet() then
                         repeat
-                            Rec.FilterGroup;
-                            IncentiveSetup.SetFilter("Item Category Code", '<>%1', ItemCategory.Code);
+                            IncentiveSetup.Setrange("Item Category Code", ItemCategory.Code);
+                            if IncentiveSetup.FindSet() then
+                                IncentiveSetup.ModifyAll("Incentive Pecent", 5);
                         until ItemCategory.Next() = 0;
-                        if IncentiveSetup.FindSet() then begin
-                            repeat
-                                IncentiveSetup.Init();
-                                IncentiveSetup."Incentive Pecent" := 7;
-                                IncentiveSetup.Modify()
-                            until IncentiveSetup.Next() = 0;
-                        end;
 
-                    end;
+                    ItemCategory.SetFilter("Parent Category", '<>%1', 'STUFF');
+                    if ItemCategory.FindSet() then
+                        repeat
+                            IncentiveSetup.Setrange("Item Category Code", ItemCategory.Code);
+                            if IncentiveSetup.FindSet() then
+                                IncentiveSetup.ModifyAll("Incentive Pecent", 7);
+                        until ItemCategory.Next() = 0;
+
                 end;
             }
 
