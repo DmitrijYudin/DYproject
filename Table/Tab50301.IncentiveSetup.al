@@ -1,6 +1,9 @@
 table 50301 "Incentive Setup"
 {
-    DataClassification = ToBeClassified;
+    //DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
+    Extensible = true;
+
 
     fields
     {
