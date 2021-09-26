@@ -4,6 +4,7 @@ page 50301 "Incentive Setup"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Incentive Setup";
+    Extensible = true;
 
     layout
     {
@@ -158,18 +159,7 @@ page 50301 "Incentive Setup"
                 end;
             }
 
-            action("Delete all data")
-            {
-                ApplicationArea = All;
-                Caption = 'Delete all data';
-                trigger OnAction();
-                var
-                    IncentiveSetup: Record "Incentive Setup";
-                begin
-                    IncentiveSetup.Init();
-                    IncentiveSetup.DeleteAll();
-                end;
-            }
+
 
             action("Issue 1")
             {
@@ -214,6 +204,72 @@ page 50301 "Incentive Setup"
                     IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
                 end;
             }
+            action("Put 5% to STUFF else 7% by logic")
+            {
+                ApplicationArea = All;
+                Caption = 'Put 5% to STUFF else 7% by logic';
+                trigger OnAction();
+                var
+                    IncentiveSetup: Record "Incentive Setup";
+                    ItemCategory: Record "Item Category";
+                    FindSTUFF: Boolean;
+                begin
+                    IncentiveSetup.Init();
+                    ItemCategory.Init();
+                    if IncentiveSetup.FindSet() then
+                        repeat
+                            FindSTUFF := false;
+                            //ItemCategory.SetFilter("Parent Category", '%1', 'STUFF');
+                            ItemCategory.SetRange("Parent Category", 'STUFF');
+                            if ItemCategory.FindSet() then
+                                repeat
+                                    if ItemCategory.Code = IncentiveSetup."Item Category Code" then begin
+                                        FindSTUFF := true;
+                                        break;
+                                    end;
+                                until ItemCategory.Next() = 0;
+
+                            if FindSTUFF = true then begin
+                                IncentiveSetup."Incentive Pecent" := 5;
+                            end else begin
+                                IncentiveSetup."Incentive Pecent" := 7;
+                            end;
+                            IncentiveSetup.Modify()
+                        until IncentiveSetup.Next() = 0;
+                end;
+            }
+
+            action("Put 5% to STUFF else 7% by filters")
+            {
+                ApplicationArea = All;
+                Caption = 'Put 5% to STUFF else 7% by filters';
+                trigger OnAction();
+                var
+                    IncentiveSetup: Record "Incentive Setup";
+                    ItemCategory: Record "Item Category";
+                    FindSTUFF: Boolean;
+                begin
+                    IncentiveSetup.Init();
+                    ItemCategory.Init();
+
+                    ItemCategory.SetRange("Parent Category", 'STUFF');
+                    if ItemCategory.FindSet() then begin
+                        repeat
+                            Rec.FilterGroup;
+                            IncentiveSetup.SetFilter("Item Category Code", '<>%1', ItemCategory.Code);
+                        until ItemCategory.Next() = 0;
+                        if IncentiveSetup.FindSet() then begin
+                            repeat
+                                IncentiveSetup.Init();
+                                IncentiveSetup."Incentive Pecent" := 7;
+                                IncentiveSetup.Modify()
+                            until IncentiveSetup.Next() = 0;
+                        end;
+
+                    end;
+                end;
+            }
+
             action("First line Check")
             {
                 ApplicationArea = All;
@@ -225,6 +281,19 @@ page 50301 "Incentive Setup"
                     IncentiveSetupCheck.Init();
                     IncentiveSetupCheck.FindFirst();
                     Message('IncentiveSetupCheck ' + Format(IncentiveSetupCheck."Incentive Pecent"));
+                end;
+            }
+
+            action("Delete all data")
+            {
+                ApplicationArea = All;
+                Caption = 'Delete all data';
+                trigger OnAction();
+                var
+                    IncentiveSetup: Record "Incentive Setup";
+                begin
+                    IncentiveSetup.Init();
+                    IncentiveSetup.DeleteAll();
                 end;
             }
         }
