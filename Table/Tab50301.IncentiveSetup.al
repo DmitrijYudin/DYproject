@@ -23,6 +23,10 @@ table 50301 "Incentive Setup"
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 2;
         }
+        field(4; "Record No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
