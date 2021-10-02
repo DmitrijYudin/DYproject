@@ -315,6 +315,64 @@ page 50301 "Incentive Setup"
                 end;
             }
 
+            action("Get selection filter")
+            {
+                ApplicationArea = All;
+                Caption = 'Get selection filter';
+                //Promoted = true;
+                //PromotedCategory = Process;
+                //PromotedIsBig = true;
+                //PromotedOnly = true;
+
+                trigger OnAction();
+                var
+                    IncentiveSetup: Record "Incentive Setup";
+                    ItemCategory: Record "Item Category";
+                begin
+                    CurrPage.SetSelectionFilter(IncentiveSetup);
+                    Message('Filter=%1 , Count=%2', IncentiveSetup.GetFilters, IncentiveSetup.Count);
+                end;
+            }
+
+            action("Filter Current page to DY Filtergroup 0")
+            {
+                ApplicationArea = All;
+                Caption = 'Filter Current page to DY Filtergroup 0';
+                //Promoted = true;
+                //PromotedCategory = Process;
+                //PromotedIsBig = true;
+                //PromotedOnly = true;
+
+                trigger OnAction();
+                var
+                    fgr: Integer;
+                begin
+                    fgr := Rec.FilterGroup;
+                    Rec.SetFilter("Sales Persone Code", 'DY');
+                    Message('filter group = %1, DY', fgr);
+                end;
+            }
+            action("Filter Current page to DY Filtergroup 11")
+            {
+                ApplicationArea = All;
+                Caption = 'Filter Current page to DY Filtergroup 11';
+                //Promoted = true;
+                //PromotedCategory = Process;
+                //PromotedIsBig = true;
+                //PromotedOnly = true;
+
+                trigger OnAction();
+                var
+                    fgr: Integer;
+                begin
+                    Rec.FilterGroup := 11;
+                    fgr := Rec.FilterGroup;
+                    Rec.SetFilter("Sales Persone Code", 'DY');
+                    Message('filter group = %1, DY. Update to reset Filter 11', fgr);
+                end;
+            }
+
+
             action("Test filters")
             // good job!!
             {
