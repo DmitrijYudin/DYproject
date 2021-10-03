@@ -236,11 +236,11 @@ page 50301 "Incentive Setup"
                 end;
             }
 
-            action("Put 5% to STUFF else 7% by filters")
+            action("Put 5% to STUFF else 7% by filters V1")
             // good job!!
             {
                 ApplicationArea = All;
-                Caption = 'Put 5% to STUFF else 7% by filters';
+                Caption = 'Put 5% to STUFF else 7% by filters V1';
                 trigger OnAction();
                 var
                     IncentiveSetup: Record "Incentive Setup";
@@ -299,19 +299,20 @@ page 50301 "Incentive Setup"
                     IncentiveSetup: Record "Incentive Setup";
                     ItemCategory: Record "Item Category";
                 begin
-                    if IncentiveSetup.FindSet() then
+                    if IncentiveSetup.FindSet() then begin
                         ItemCategory.SetRange("Parent Category", 'STUFF');
-                    if ItemCategory.FindSet() then begin
-                        repeat
-                            ItemCategory.SetRange(Code, IncentiveSetup."Item Category Code");
-                            if ItemCategory.FindSet() then
-                                IncentiveSetup."Incentive Pecent" := 5
-                            else
-                                IncentiveSetup."Incentive Pecent" := 7;
-                            IncentiveSetup.Modify()
-                        until IncentiveSetup.Next() = 0;
-                    end else
-                        IncentiveSetup.ModifyAll("Incentive Pecent", 7);
+                        if ItemCategory.FindSet() then begin
+                            repeat
+                                ItemCategory.SetRange(Code, IncentiveSetup."Item Category Code");
+                                if not ItemCategory.IsEmpty then
+                                    IncentiveSetup."Incentive Pecent" := 5
+                                else
+                                    IncentiveSetup."Incentive Pecent" := 7;
+                                IncentiveSetup.Modify()
+                            until IncentiveSetup.Next() = 0;
+                        end else
+                            IncentiveSetup.ModifyAll("Incentive Pecent", 7);
+                    end;
                 end;
             }
 
