@@ -1,10 +1,11 @@
-pageextension 50304 "Item List Ext" extends "Item List"
+pageextension 50308 DYTestTextField extends "Sales Invoice"
 {
+
     layout
     {
-        addlast(Control1)
+        addfirst(General)
         {
-            field("Last Counted"; Rec."Last Counted")
+            field("DYTestTextField"; Rec.DYTestTextFiel)
             {
                 Visible = true;
                 ApplicationArea = all;

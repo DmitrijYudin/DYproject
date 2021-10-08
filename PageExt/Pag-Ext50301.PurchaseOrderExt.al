@@ -1,6 +1,3 @@
-/// <summary>
-/// PageExtension PurchaseOrderListExt (ID 50301) extends Record Purchase Order List.
-/// </summary>
 pageextension 50302 PurchaseOrderExt extends "Purchase Order" //OriginalId
 {
     layout
