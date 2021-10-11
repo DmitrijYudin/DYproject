@@ -10,6 +10,12 @@ tableextension 50301 ItemExt extends Item
             Caption = 'Last Counted';
             DataClassification = ToBeClassified;
         }
+
+        field(50301; "Item Approval Status"; Enum "Pending Approval")
+        {
+            Caption = 'Pending Approval';
+            DataClassification = ToBeClassified;
+        }
     }
 
 }

@@ -9,7 +9,7 @@ codeunit 50303 PurchaseHeaderSubs50303
     procedure "InsertPurchesOrderMessage"(Var Rec: Record "Purchase Header"; RunTrigger: Boolean)
     begin
 
-        Message('New Purchase Order was created');
+        //Message('DY New Purchase Order was created');
 
     end;
 }

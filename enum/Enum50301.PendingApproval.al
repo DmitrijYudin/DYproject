@@ -5,15 +5,15 @@ enum 50301 "Pending Approval"
 {
     Extensible = true;
 
-    value(0; None)
+    value(0;NotSet)
     {
-        Caption = '';
+        Caption = 'NotSet';
     }
-    value(1; " 'Pending Approval'")
+    value(1;PendingApproval)
     {
-        Caption = 'Pending Approval';
+        Caption = 'PendingApproval';
     }
-    value(2; " 'Approved'")
+    value(2; Approved)
     {
         Caption = 'Approved';
     }

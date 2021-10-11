@@ -13,5 +13,15 @@ pageextension 50304 "Item List Ext" extends "Item List"
                 ApplicationArea = all;
             }
         }
+
+        addfirst(Control1)
+        {
+            field("Item Approval Status"; Rec."Item Approval Status")
+            {
+                Visible = true;
+                ApplicationArea = all;
+            }
+
+        }
     }
 }
