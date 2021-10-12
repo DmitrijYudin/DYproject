@@ -1,4 +1,4 @@
-codeunit 50308 OnBeforePostedPurchaseInvoise
+codeunit 50308 OnBeforePurchLineDeleteAll
 {
     EventSubscriberInstance = StaticAutomatic;
 
@@ -6,6 +6,7 @@ codeunit 50308 OnBeforePostedPurchaseInvoise
     local procedure OnBeforePurchLineDeleteAll(var PurchaseLine: Record "Purchase Line"; CommitIsSupressed: Boolean);
     var
         DYTemp: Record DYTemp;
+    //"Purchase Line": Record "Purchase Line";
     begin
         DYTemp.Init();
         DYTemp.DeleteAll();
