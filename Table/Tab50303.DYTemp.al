@@ -2,7 +2,7 @@ table 50303 DYTemp
 {
     Caption = 'DYTemp';
     DataClassification = ToBeClassified;
-    
+
     fields
     {
         field(1; "Record No"; Integer)
@@ -10,7 +10,7 @@ table 50303 DYTemp
             Caption = 'Record No';
             DataClassification = ToBeClassified;
         }
-        field(2; "No"; Integer)
+        field(2; "No"; Code[20])
         {
             Caption = 'No';
             DataClassification = ToBeClassified;
@@ -23,10 +23,10 @@ table 50303 DYTemp
     }
     keys
     {
-        key(PK; "Record No","Item Status Approved")
+        key(PK; "Record No", "Item Status Approved")
         {
             Clustered = true;
         }
     }
-    
+
 }

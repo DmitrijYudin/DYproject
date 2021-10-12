@@ -14,7 +14,7 @@ pageextension 50304 "Item List Ext" extends "Item List"
             }
         }
 
-        addfirst(Control1)
+        addafter("No.")
         {
             field("Item Approval Status"; Rec."Item Approval Status")
             {
