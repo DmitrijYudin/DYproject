@@ -7,23 +7,21 @@ table 50303 DYTemp
     {
         field(1; "Record No"; Integer)
         {
-            Caption = 'Record No';
             DataClassification = ToBeClassified;
         }
-        field(2; "No"; Code[20])
+        field(2; "No."; Code[20])
         {
-            Caption = 'No';
             DataClassification = ToBeClassified;
         }
         field(3; "Item Status Approved"; Enum "Pending Approval")
         {
-            Caption = 'Item Status Approved';
-            DataClassification = ToBeClassified;
+            FieldClass = FlowField;
+            CalcFormula = lookup(Item."Item Approval Status" where("No." = field("No.")));
         }
     }
     keys
     {
-        key(PK; "Record No", "Item Status Approved")
+        key(PK; "Record No")
         {
             Clustered = true;
         }

@@ -8,9 +8,12 @@ codeunit 50308 TerminatePostPurchaseDoc
         DYTemp: Record DYTemp;
         PurchaseLine: Record "Purchase Line";
     begin
+
+        //PurchaseLine.CalcFields("DY Item Approval Status");
         PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
         PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
         PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
+
         if PurchaseLine.FindFirst() then
             if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then
                 Error('OnBeforePurchLineDeleteAll \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status");
@@ -23,7 +26,7 @@ codeunit 50308 TerminatePostPurchaseDoc
         if PurchaseLine.FindSet() then
             repeat
                 DYTemp.Init();
-                DYTemp.No := PurchaseLine."No.";
+                DYTemp."No." := PurchaseLine."No.";
                 DYTemp."Item Status Approved" := PurchaseLine."DY Item Approval Status";
                 DYTemp."Record No" := DYTemp.count;
                 DYTemp.Insert();

@@ -18,7 +18,7 @@ page 50303 DYTemp
                 {
                     ApplicationArea = All;
                 }
-                field("No"; Rec.No)
+                field("No"; Rec."No.")
                 {
                     ApplicationArea = All;
                 }

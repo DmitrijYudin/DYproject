@@ -11,7 +11,7 @@ tableextension 50300 PurchaseHeaderExt extends "Purchase Header"
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
-                Message('CRM No. "%1" was changed to "%2" ', xRec."CRM No.", Rec."CRM No.");
+                //Message('CRM No. "%1" was changed to "%2" ', xRec."CRM No.", Rec."CRM No.");
             end;
         }
 
