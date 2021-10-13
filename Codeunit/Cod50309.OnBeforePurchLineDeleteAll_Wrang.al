@@ -1,3 +1,10 @@
+// [EventSubscriber(ObjectType::Codeunit, Codeunit::"Lines Instruction Mgt.", 'OnAfterSetPurchaseLineFilters', '', false, false)]
+// local procedure OnAfterSetPurchaseLineFilters(var PurchaseLine: Record "Purchase Line"; PurchaseHeader: Record "Purchase Header");
+// begin
+// end;
+
+
+
 // codeunit 50309 OnBeforePurchLineDeleteAll_2
 // {
 //     EventSubscriberInstance = StaticAutomatic;

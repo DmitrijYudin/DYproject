@@ -1,4 +1,4 @@
-codeunit 50308 OnBeforePurchLineDeleteAll
+codeunit 50308 TerminatePostPurchaseDoc
 {
     EventSubscriberInstance = StaticAutomatic;
 
@@ -8,10 +8,18 @@ codeunit 50308 OnBeforePurchLineDeleteAll
         DYTemp: Record DYTemp;
         PurchaseLine: Record "Purchase Line";
     begin
-        DYTemp.Init();
-        DYTemp.DeleteAll();
-        PurchaseLine.Init();
+        PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
+        PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
+        PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
+        if PurchaseLine.FindFirst() then
+            if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then
+                Error('OnBeforePurchLineDeleteAll \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status");
 
+        //fill in DYTemp
+        DYTemp.DeleteAll();
+        PurchaseLine.Reset();
+        PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
+        PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
         if PurchaseLine.FindSet() then
             repeat
                 DYTemp.Init();
@@ -20,11 +28,6 @@ codeunit 50308 OnBeforePurchLineDeleteAll
                 DYTemp."Record No" := DYTemp.count;
                 DYTemp.Insert();
             until PurchaseLine.Next() = 0;
-
-        PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
-        if PurchaseLine.FindFirst() then
-            if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then
-                Error('OnBeforePurchLineDeleteAll \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status")
     end;
 }
 
