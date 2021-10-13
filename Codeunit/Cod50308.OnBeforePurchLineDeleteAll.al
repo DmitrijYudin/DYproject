@@ -2,14 +2,15 @@ codeunit 50308 OnBeforePurchLineDeleteAll
 {
     EventSubscriberInstance = StaticAutomatic;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePurchLineDeleteAll', '', false, false)]
-    local procedure OnBeforePurchLineDeleteAll(var PurchaseLine: Record "Purchase Line"; CommitIsSupressed: Boolean);
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePostPurchaseDoc', '', false, false)]
+    local procedure OnBeforePostPurchaseDoc(var Sender: Codeunit "Purch.-Post"; var PurchaseHeader: Record "Purchase Header"; PreviewMode: Boolean; CommitIsSupressed: Boolean; var HideProgressWindow: Boolean);
     var
         DYTemp: Record DYTemp;
-    //"Purchase Line": Record "Purchase Line";
+        PurchaseLine: Record "Purchase Line";
     begin
         DYTemp.Init();
         DYTemp.DeleteAll();
+        PurchaseLine.Init();
 
         if PurchaseLine.FindSet() then
             repeat
@@ -26,6 +27,36 @@ codeunit 50308 OnBeforePurchLineDeleteAll
                 Error('OnBeforePurchLineDeleteAll \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status")
     end;
 }
+
+
+
+//     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Lines Instruction Mgt.", 'OnAfterSetPurchaseLineFilters', '', false, false)]
+//     local procedure OnAfterSetPurchaseLineFilters(var PurchaseLine: Record "Purchase Line"; PurchaseHeader: Record "Purchase Header");
+//     var
+//         DYTemp: Record DYTemp;
+//     begin
+//         DYTemp.Init();
+//         DYTemp.DeleteAll();
+//         PurchaseLine.Init();
+
+//         if PurchaseLine.FindSet() then
+//             repeat
+//                 DYTemp.Init();
+//                 DYTemp.No := PurchaseLine."No.";
+//                 DYTemp."Item Status Approved" := PurchaseLine."DY Item Approval Status";
+//                 DYTemp."Record No" := DYTemp.count;
+//                 DYTemp.Insert();
+//             until PurchaseLine.Next() = 0;
+
+//         PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
+//         if PurchaseLine.FindFirst() then
+//             if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then
+//                 Error('OnBeforePurchLineDeleteAll \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status")
+//     end;
+// }
+
+//    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePurchLineDeleteAll', '', false, false)]
+//   local procedure OnBeforePurchLineDeleteAll(var PurchaseLine: Record "Purchase Line"; CommitIsSupressed: Boolean);
 
 // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post (Yes/No)", 'OnBeforeRunPurchPost', '', false, false)]
 // local procedure OnBeforeRunPurchPost(var PurchaseHeader: Record "Purchase Header");
