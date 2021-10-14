@@ -9,7 +9,7 @@ codeunit 50307 "CopySalesHeader"
         Message('ToSalesHeader.DYTestTextFiel = %1 \ OldSalesHeader.DYTestTextFiel = %2 \ FromSalesHeader.DYTestTextFiel ', ToSalesHeader.DYTestTextFiel, OldSalesHeader.DYTestTextFiel, FromSalesHeader.DYTestTextFiel);
     end;
 
-    
+
 }
 //   codeunit 6620
 //  [IntegrationEvent(false, false)]
