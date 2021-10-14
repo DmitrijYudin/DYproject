@@ -6,7 +6,11 @@ codeunit 50310 TerminatePostPurchaseDoc3
     local procedure OnAfterSetPurchaseLineFilters(var PurchaseLine: Record "Purchase Line"; PurchaseHeader: Record "Purchase Header");
     var
         DYTemp: Record DYTemp;
+        IncomeFiltersPurchaseLine: Record "Purchase Line";
+        IncomeFiltersGoupe: Integer;
     begin
+        IncomeFiltersGoupe := PurchaseLine.FilterGroup;
+        IncomeFiltersPurchaseLine.CopyFilters(PurchaseLine);
 
         PurchaseLine.Reset();
         PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
@@ -17,7 +21,6 @@ codeunit 50310 TerminatePostPurchaseDoc3
         if PurchaseLine.FindFirst() then
             if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then
                 Error('Posting Error Termination \ FindFirst No= %1 Status= %2 ', PurchaseLine."No.", PurchaseLine."DY Item Approval Status");
-
         //fill in DYTemp
         DYTemp.DeleteAll();
         PurchaseLine.Reset();
@@ -32,6 +35,9 @@ codeunit 50310 TerminatePostPurchaseDoc3
                 DYTemp.Insert();
             until PurchaseLine.Next() = 0;
 
+        PurchaseLine.Reset();
+        PurchaseLine.FilterGroup := IncomeFiltersGoupe;
+        PurchaseLine.CopyFilters(IncomeFiltersPurchaseLine);
     end;
 }
 
