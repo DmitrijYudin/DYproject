@@ -1,8 +1,8 @@
-pageextension 50310 "PostedPurchInvoiceSubformExt" extends "Posted Purch. Invoice Subform"
+pageextension 50306 "Posted Purch. Invoice Subform" extends "Posted Purch. Invoice Subform"
 {
     layout
     {
-        addfirst(Control1)
+        addafter("No.")
         {
             field("Item Approval Status"; Rec."DY Item Approval Status")
             {

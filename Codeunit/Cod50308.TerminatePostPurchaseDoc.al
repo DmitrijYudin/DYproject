@@ -9,10 +9,13 @@ codeunit 50308 TerminatePostPurchaseDoc
         PurchaseLine: Record "Purchase Line";
     begin
 
-        //PurchaseLine.CalcFields("DY Item Approval Status");
+
         PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
         PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
         PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
+
+        PurchaseLine.CalcFields("DY Item Approval Status");
+        //PurchaseLine.SetAutoCalcFields("DY Item Approval Status");
 
         if PurchaseLine.FindFirst() then
             if Confirm('FindFirst No= %1 , Approval Status= %2 \ Press Yes to terminate the posting and get the error\ Press No to post without error ', false, PurchaseLine."No.", PurchaseLine."DY Item Approval Status") then

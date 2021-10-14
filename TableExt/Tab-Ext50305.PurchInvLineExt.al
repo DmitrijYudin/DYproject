@@ -4,7 +4,8 @@ tableextension 50305 "Purch. Inv. Line Ext" extends "Purch. Inv. Line"
     {
         field(50300; "DY Item Approval Status"; Enum "Pending Approval")
         {
-            TableRelation = Item."Item Approval Status";
+            FieldClass = FlowField;
+            CalcFormula = lookup(Item."Item Approval Status" where("No." = field("No.")));
         }
     }
 }
