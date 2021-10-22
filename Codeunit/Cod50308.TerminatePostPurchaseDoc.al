@@ -8,8 +8,6 @@ codeunit 50308 TerminatePostPurchaseDoc
         DYTemp: Record DYTemp;
         PurchaseLine: Record "Purchase Line";
     begin
-
-
         PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
         PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
         PurchaseLine.SetFilter("DY Item Approval Status", '<>%1', PurchaseLine."DY Item Approval Status"::"Approved");
