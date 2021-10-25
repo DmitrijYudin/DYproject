@@ -1,35 +1,35 @@
-page 50304 "Lot Avail. by Bin"
+page 50304 "DY Lot Avail. by Bin"
 {
-
+    ApplicationArea = All;
     PageType = List;
-    SourceTable = "Warehouse Entry";
-    SourceTableTemporary = true;
     UsageCategory = Lists;
+    SourceTable = "Warehouse Entry";
+    //SourceTableTemporary = true;
     layout
     {
         area(content)
         {
             repeater(Group)
             {
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
-                    ApplicationArea = ALL;
+                    ApplicationArea = Basic;
                 }
-                field("Location Code"; "Location Code")
+                field("Location Code"; Rec."Location Code")
                 {
-                    ApplicationArea = ALL;
+                    ApplicationArea = Basic;
                 }
-                field("Bin Code"; "Bin Code")
+                field("Bin Code"; Rec."Bin Code")
                 {
-                    ApplicationArea = ALL;
+                    ApplicationArea = Basic;
                 }
-                field("Serial No."; "Serial No.")
+                field("Serial No."; Rec."Serial No.")
                 {
-                    ApplicationArea = ALL;
+                    ApplicationArea = Basic;
                 }
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
-                    ApplicationArea = ALL;
+                    ApplicationArea = Basic;
                 }
             }
         }
@@ -40,12 +40,12 @@ page 50304 "Lot Avail. by Bin"
     begin
         LotAvail.Open();
         while LotAvail.Read() do begin
-            Init();
-            "Item No." := LotAvail.Item_No_;
-            "Location Code" := LotAvail.Location_Code;
-            "Bin Code" := LotAvail.Bin_Code;
-            Quantity := LotAvail.Sum_Quantity;
-            Insert();
+            Rec.Init();
+            Rec."Item No." := LotAvail.Item_No_;
+            Rec."Location Code" := LotAvail.Location_Code;
+            Rec."Bin Code" := LotAvail.Bin_Code;
+            Rec.Quantity := LotAvail.Sum_Quantity;
+            Rec.Insert();
         end;
     end;
 }

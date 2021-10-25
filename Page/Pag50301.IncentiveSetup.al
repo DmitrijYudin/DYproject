@@ -92,8 +92,6 @@ page 50301 "Incentive Setup"
                             if ItemCategory.FindSet(true, true) then begin
                                 repeat
                                     IncentiveSetup.Init();
-                                    SalesPersone.Init();
-                                    ItemCategory.Init();
 
                                     IncentiveSetup."Sales Persone Code" := SalesPersone.Code;
                                     IncentiveSetup."Item Category Code" := ItemCategory.Code;

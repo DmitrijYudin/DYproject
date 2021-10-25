@@ -23,6 +23,6 @@ codeunit 50309 interview1
                 PurchDoc.Invoice := FALSE;
 
                 PostPurch.RUN(PurchDoc); //posting 
-            UNTIL PurchDoc.NEXT = 0;
+            UNTIL PurchDoc.Next = 0;
     end;
 }
