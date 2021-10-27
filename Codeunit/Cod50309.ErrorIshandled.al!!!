@@ -1,0 +1,76 @@
+codeunit 50311 DYErrorIshandled
+{
+
+    //----- codeunit 90 ----
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforeCalcInvoice', '', false, false)]
+    local procedure OnBeforeCalcInvoice(var PurchHeader: Record "Purchase Header"; var NewInvoice: Boolean; var IsHandled: Boolean);
+    begin
+        IsHandled := true;
+        message('DY OnBeforeCalcInvoice IsHandled=True');
+    end;
+
+    /*   [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforeCommitAndUpdateAnalysisVeiw', '', false, false)]
+       local procedure OnBeforeCommitAndUpdateAnalysisVeiw(InvtPickPutaway: Boolean; SuppressCommit: Boolean; PreviewMode: Boolean; var IsHandled: Boolean);
+       begin
+           IsHandled := true;
+           message('OnBeforeCommitAndUpdateAnalysisVeiw');
+       end;
+
+
+       [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnPostPurchLineOnBeforeInsertInvoiceLine', '', false, false)]
+       local procedure OnPostPurchLineOnBeforeInsertInvoiceLine(PurchaseHeader: Record "Purchase Header"; PurchaseLine: Record "Purchase Line"; var IsHandled: Boolean);
+       begin
+           IsHandled := true;
+           message('OnPostPurchLineOnBeforeInsertInvoiceLine');
+       end;
+
+       [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnBeforePostGLAndVendor', '', false, false)]
+       local procedure OnBeforePostGLAndVendor(var PurchHeader: Record "Purchase Header"; var TempInvoicePostBuffer: Record "Invoice Post. Buffer"; PreviewMode: Boolean; CommitIsSupressed: Boolean; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; var IsHandled: Boolean);
+       begin
+           IsHandled := true;
+           message('OnPostPurchLineOnBeforeInsertInvoiceLine');
+       end;
+
+
+
+
+       //----- page 700 "Error Messages" ------
+       [EventSubscriber(ObjectType::Page, Page::"Error Messages", 'OnOpenRelatedRecord', '', false, false)]
+       local procedure OnOpenRelatedRecord(ErrorMessage: Record "Error Message"; var IsHandled: Boolean);
+       begin
+           Ishandled := True;
+           //Message('OnOpenRelatedRecord');
+       end;
+
+       [EventSubscriber(ObjectType::Page, Page::"Error Messages", 'OnDrillDownSource', '', false, false)]
+       local procedure OnDrillDownSource(ErrorMessage: Record "Error Message"; SourceFieldNo: Integer; var IsHandled: Boolean);
+       begin
+           Ishandled := True;
+           //Message('OnDrillDownSource');
+       end;
+
+       //----- table 700 "Error Message" ------
+       [EventSubscriber(ObjectType::Table, Database::"Error Message", 'OnBeforeLogMessage', '', false, false)]
+       local procedure OnBeforeLogMessage(RecRelatedVariant: Variant; FieldNumber: Integer; MessageType: Option; NewDescription: Text; var IsHandled: Boolean);
+       begin
+           Ishandled := True;
+           NewDescription := 'OnBeforeLogMessage';
+           //Message('OnBeforeLogMessage');
+       end;
+
+       [EventSubscriber(ObjectType::Table, Database::"Error Message", 'OnLogIfEmptyOnAfterCheckEmptyValue', '', false, false)]
+       local procedure OnLogIfEmptyOnAfterCheckEmptyValue(FieldRef: FieldRef; EmptyFieldRef: FieldRef; IsHandled: Boolean);
+       begin
+           Ishandled := True;
+       end;
+
+   */
+    // [EventSubscriber(ObjectType::Table, Database::"Error Message", 'OnBeforeLogSimpleMessage', '', false, false)]
+    // local procedure OnBeforeLogSimpleMessage(MessageType: Option; NewDescription: Text; var IsHandled: Boolean);
+    // begin
+    //     Ishandled := True;
+    // end;
+
+
+}

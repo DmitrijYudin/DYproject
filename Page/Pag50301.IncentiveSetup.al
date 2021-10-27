@@ -34,7 +34,6 @@ page 50301 "Incentive Setup"
             }
         }
     }
-
     actions
     {
         area(Processing)
@@ -48,9 +47,10 @@ page 50301 "Incentive Setup"
                     SalesPersone: Record "Salesperson/Purchaser";
                     ItemCategory: Record "Item Category";
                     IncentiveSetup: Record "Incentive Setup";
+                    Start_timer, End_timer : Time;
                 begin
 
-
+                    Start_timer := Time();
                     //SalesPersone.SetFilter(Code, '%1|%2', 'DY', 'AH');
                     if SalesPersone.FindSet(true, true) then begin
                         repeat
@@ -72,7 +72,8 @@ page 50301 "Incentive Setup"
                     end else begin
                         Error('Sorry, but Salesperson/Purchaser is empty. You Shoul create it first');
                     end;
-
+                    End_timer := Time();
+                    Message('Processing time = %1 - %2 = %3', Start_timer, End_timer, End_timer - Start_timer, End_timer);
                 end;
             }
 
@@ -85,7 +86,9 @@ page 50301 "Incentive Setup"
                     SalesPersone: Record "Salesperson/Purchaser";
                     ItemCategory: Record "Item Category";
                     IncentiveSetup: Record "Incentive Setup";
+                    Start_timer, End_timer : Time;
                 begin
+                    Start_timer := Time();
                     ItemCategory.SetFilter("Has Children", 'No');
                     if SalesPersone.FindSet(true, true) then begin
                         repeat
@@ -103,6 +106,8 @@ page 50301 "Incentive Setup"
                             end;
                         Until SalesPersone.Next(1) = 0;
                     end;
+                    End_timer := Time();
+                    Message('Processing time = %1 - %2 = %3', Start_timer, End_timer, End_timer - Start_timer, End_timer);
                 end;
             }
 

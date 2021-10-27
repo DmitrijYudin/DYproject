@@ -11,4 +11,5 @@ pageextension 50300 CustomerListExt extends "Customer List"
     begin
         Message('Customer list');
     end;
+    
 }
