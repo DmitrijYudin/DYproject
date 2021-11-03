@@ -9,7 +9,7 @@ codeunit 50300 "Fined The Right Way"
     procedure FinedTest()
     var 
         CustomerVar: Record Customer;
-    begin
+       begin
         CustomerVar.Find()
     end;
 }

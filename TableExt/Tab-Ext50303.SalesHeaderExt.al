@@ -7,5 +7,11 @@ tableextension 50303 SalesHeaderExt extends "Sales Header"
             Caption = 'DYTestTextFiel';
             DataClassification = ToBeClassified;
         }
+        field(50301; isAPI; Boolean)
+        {
+            Caption = 'API';
+            DataClassification = ToBeClassified;
+        }
+
     }
 }

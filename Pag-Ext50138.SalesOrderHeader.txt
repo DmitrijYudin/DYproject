@@ -1,0 +1,758 @@
+pageextension 50138 "SalesOrderHeader" extends "Sales Order"
+{
+    layout
+    {
+        modify("No.")
+        {
+            ApplicationArea = all;
+            Visible = true;
+        }
+        modify("Sell-to Customer No.")
+        {
+            ApplicationArea = all;
+            Importance = Promoted;
+            Caption = 'LE-ID';
+        }
+        modify("Sell-to Customer Name")
+        {
+            Caption = 'LE-ID Name';
+        }
+        modify("Sell-to Contact")
+        {
+            Importance = Additional;
+        }
+
+        modify("Payment Method Code")
+        {
+            Visible = true;
+        }
+        modify("Requested Delivery Date")
+        {
+            Importance = Additional;
+        }
+        modify("Your Reference")
+        {
+            Importance = Additional;
+        }
+        addbefore("Your Reference")
+        {
+            field("Prepayment No. Series"; "Prepayment No. Series")
+            {
+                ApplicationArea = All;
+                Importance = Additional;
+            }
+        }
+        modify("VAT Bus. Posting Group")
+        {
+            Importance = Additional;
+        }
+        modify("Shortcut Dimension 1 Code")
+        {
+            Importance = Additional;
+        }
+        modify("Shortcut Dimension 2 Code")
+        {
+            Importance = Promoted;
+            Visible = true;
+        }
+        modify("Payment Discount %")
+        {
+            Importance = Additional;
+        }
+
+        modify("Direct Debit Mandate ID")
+        {
+            Importance = Additional;
+        }
+        modify("Prepmt. Payment Discount %")
+        {
+            Importance = Additional;
+        }
+        modify("Prepmt. Pmt. Discount Date")
+        {
+            Importance = Additional;
+        }
+        modify("Document Date")
+        {
+            Importance = Promoted;
+        }
+        modify(General)
+        {
+            Editable = not isAPI;
+        }
+        modify("Invoice Details")
+        {
+            Editable = not isAPI;
+        }
+        modify("Shipping and Billing")
+        {
+            Editable = not isAPI;
+        }
+        modify("Foreign Trade")
+        {
+            Editable = not isAPI;
+        }
+        modify(Control1900201301)
+        {
+            Editable = not isAPI;
+        }
+        modify(SalesLines)
+        {
+            Enabled = not API;
+        }
+        addafter("Sell-to Customer Name")
+        {
+            field("C-ID"; "C-ID")
+            {
+                Caption = 'C-ID';
+                Editable = false;
+                ApplicationArea = All;
+                Visible = true;
+            }
+            field("C-ID Name"; "C-ID Name")
+            {
+                Caption = 'C-ID Name';
+                Editable = false;
+                ApplicationArea = All;
+                Visible = true;
+            }
+            field(invoiceType; invoiceType)
+            {
+                Caption = 'Invoice Type';
+                Editable = true;
+                ApplicationArea = All;
+            }
+            field(API; API)
+            {
+                Caption = 'API';
+                Editable = false;
+                ApplicationArea = All;
+            }
+            field("Customer Posting Group"; "Customer Posting Group")
+            {
+                Caption = 'Customer Posting Group';
+                Editable = true;
+                ApplicationArea = All;
+            }
+            field(Type; Type)
+            {
+                Caption = 'Shipment or service type';
+                Editable = not isAPI;
+                ApplicationArea = All;
+
+                trigger OnValidate()
+                begin
+                    SetFieldsVisibility();
+                end;
+            }
+            field(Mode; Mode)
+            {
+                Caption = 'Shipment or service mode';
+                Editable = not isAPI;
+                ApplicationArea = All;
+
+                trigger OnValidate()
+                begin
+                    SetFieldsVisibility();
+                end;
+            }
+            field(CustomerReference; CustomerReference)
+            {
+                Caption = 'Customer Reference';
+                Editable = not isAPI;
+                ApplicationArea = All;
+                Visible = true;
+            }
+            field("Booking date"; "Booking date")
+            {
+                Caption = 'Booking Date';
+                Editable = not isAPI;
+                ApplicationArea = All;
+                Visible = true;
+            }
+            field("Service date"; "Service date")
+            {
+                Caption = 'Service Date';
+                Editable = not ServiceDateIsPushedFromAPIVar;
+                ApplicationArea = All;
+                Visible = true;
+                ShowMandatory = true;
+                NotBlank = true;
+            }
+            // field(ServiceDateIsPushedFromAPI; ServiceDateIsPushedFromAPI)
+            // {
+            //     Editable = true;
+            //     ApplicationArea = all;
+            // }
+
+        }
+        moveafter(Mode; "Shortcut Dimension 2 Code", "External Document No.")
+        moveafter("Booking date"; "Order Date", "Document Date", "Posting Date", "Due Date")
+        moveafter("Service Date"; "Payment Terms Code", "Currency Code")
+
+        addafter("Currency Code")
+        {
+            field(advComDeductableDays; advComDeductableDays)
+            {
+                Caption = 'Advance Commission Deductable Days';
+                Editable = true;
+                ApplicationArea = All;
+                Visible = true;
+            }
+        }
+
+        addafter("Work Description")
+        {
+            field("Additional Reference"; "Additional Reference")
+            {
+                ApplicationArea = All;
+                Visible = true;
+                MultiLine = true;
+            }
+        }
+
+        addafter(General)
+        {
+            group(ShipmentDetails)
+            {
+                Caption = 'Shipment Details';
+                Editable = not isAPI;
+
+                field(OriginAddress; OriginAddress)
+                {
+                    Caption = 'Origin Address';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                group(HideFields16)
+                {
+                    ShowCaption = false;
+                    Visible = VField15;
+                    field(port_of_departure_label; port_of_departure_label)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+                }
+                group(HideFields17)
+                {
+                    ShowCaption = false;
+                    Visible = VField16;
+                    field(portOfDeparture; portOfDeparture)
+                    {
+                        Visible = VField16;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.port_of_departure_label;
+                    }
+                }
+                group(HideFields18)
+                {
+                    ShowCaption = false;
+                    Visible = VField17;
+                    field(port_of_destination_label; port_of_destination_label)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+                }
+                group(HideFields19)
+                {
+                    ShowCaption = false;
+                    Visible = VField18;
+                    field(portOfDestination; portOfDestination)
+                    {
+                        Visible = VField18;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.port_of_destination_label;
+                    }
+                }
+
+                field("Destination Address"; "Destination Address")
+                {
+                    Caption = 'Destination Address';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                group(HideFields20)
+                {
+                    ShowCaption = false;
+                    Visible = VField19;
+                    Editable = true;
+                    field("Pickup Date"; "Pickup Date")
+                    {
+                        Caption = 'Pickup Date';
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+
+                }
+                group(HideFields21)
+                {
+                    ShowCaption = false;
+                    Visible = VField20;
+                    Editable = true;
+                    field("Delivery Date"; "Delivery Date")
+                    {
+                        Caption = 'Delivery Date';
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+
+                }
+
+                field("Departure Date"; "Departure Date")
+                {
+                    Caption = 'Departure Date';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                field("Arrival Date"; "Arrival Date")
+                {
+                    Caption = 'Arrival Date';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+
+            }
+            group(ShippedGoodsDetails)
+            {
+                Caption = 'Shipped Goods Details';
+                Editable = not isAPI;
+
+                group(HideFields1)
+                {
+                    ShowCaption = false;
+                    Visible = VField1;
+                    field(header_details_1; header_details_1)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+                }
+                group(HideFields2)
+                {
+                    ShowCaption = false;
+                    Visible = VField2;
+                    field(details_1; details_1)
+                    {
+                        Visible = VField1;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = header_details_1;
+                    }
+                }
+                group(HideFields3)
+                {
+                    ShowCaption = false;
+                    Visible = VField3;
+                    field(header_details_2; header_details_2)
+                    {
+                        Visible = false;
+                        ApplicationArea = All;
+                        Editable = true;
+                    }
+                }
+                group(HideFields4)
+                {
+                    ShowCaption = false;
+                    Visible = VField4;
+                    field(details_2; details_2)
+                    {
+                        Visible = VField4;
+                        ApplicationArea = All;
+                        Editable = true;
+                        CaptionClass = Rec.header_details_2;
+                    }
+                }
+                group(HideFields5)
+                {
+                    ShowCaption = false;
+                    Visible = VField5;
+                    field(header_details_3; header_details_3)
+                    {
+                        Visible = false;
+                        ApplicationArea = All;
+                        Editable = true;
+                    }
+                }
+                group(HideFields6)
+                {
+                    ShowCaption = false;
+                    Visible = VField6;
+                    field(details_3; details_3)
+                    {
+                        Visible = VField6;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.header_details_3;
+                    }
+                }
+                group(HideFields7)
+                {
+                    ShowCaption = false;
+                    Visible = VField7;
+                    field(header_details_4; header_details_4)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+                }
+                group(HideFields8)
+                {
+                    ShowCaption = false;
+                    Visible = VField8;
+                    field(details_4; details_4)
+                    {
+                        Visible = VField8;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.header_details_4;
+                    }
+                }
+                group(HideFields9)
+                {
+                    ShowCaption = false;
+                    Visible = VField9;
+                    field(header_details_5; header_details_5)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+                    }
+                }
+                group(HideFields10)
+                {
+                    ShowCaption = false;
+                    Visible = VField10;
+                    field(details_5; details_5)
+                    {
+                        Visible = VField10;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.header_details_5;
+                    }
+                }
+                group(HideFields12)
+                {
+                    ShowCaption = false;
+                    Visible = VField11;
+                    field(header_details_6; header_details_6)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+
+                    }
+                }
+                group(HideFields13)
+                {
+                    ShowCaption = false;
+                    Visible = VField12;
+                    field(details_6; details_6)
+                    {
+                        Visible = VField12;
+                        Editable = true;
+                        ApplicationArea = All;
+
+                        CaptionClass = Rec.header_details_6;
+                    }
+                }
+                group(HideFields14)
+                {
+                    ShowCaption = false;
+                    Visible = VField13;
+                    field(shipped_goods_details_7; shipped_goods_details_7)
+                    {
+                        Visible = false;
+                        Editable = true;
+                        ApplicationArea = All;
+
+                    }
+                }
+                group(HideFields15)
+                {
+                    ShowCaption = false;
+                    Visible = VField14;
+                    field(details_7; details_7)
+                    {
+                        Visible = VField14;
+                        Editable = true;
+                        ApplicationArea = All;
+                        CaptionClass = Rec.shipped_goods_details_7;
+                    }
+                }
+            }
+            group(ShipperDetails)
+            {
+                Caption = 'Shipper Details';
+                Editable = not isAPI;
+
+                field(shipperCompanyName; shipperCompanyName)
+                {
+                    Caption = 'Shipper Company Name';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                field(shipperAddresss; shipperAddresss)
+                {
+                    Caption = 'Shipper Addresss';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                field(shipperEmail; shipperEmail)
+                {
+                    Caption = 'Email';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+                field(shipperPhone; shipperPhone)
+                {
+                    Caption = 'Phone';
+                    Editable = true;
+                    ApplicationArea = All;
+                }
+            }
+        }
+        addbefore("VAT Bus. Posting Group")
+        {
+            field("Gen. Bus. Posting Group"; "Gen. Bus. Posting Group")
+            {
+                Importance = Additional;
+                ApplicationArea = All;
+            }
+        }
+        addafter("Prepayment No. Series")
+        {
+            field("Posting No. Series"; "Posting No. Series")
+            {
+                Importance = Additional;
+                ApplicationArea = All;
+            }
+        }
+        addfirst(FactBoxes)
+        {
+            part(PDFViewer; "PDF Viewer Part")
+            {
+                Caption = 'PDF Viewer';
+                ApplicationArea = All;
+            }
+        }
+    }
+    actions
+    {
+
+        addfirst(processing)
+        {
+            action(UpdatePDF)
+            {
+                ApplicationArea = All;
+                Caption = 'Update PDF';
+                Image = View;
+                Visible = true;
+
+                trigger OnAction()
+                var
+                    GeneratePDFCU: Codeunit PDFGenerationEvents;
+                    SalesHeader: Record "Sales Header";
+                begin
+                    GeneratePDFCU.GeneratePDFSO(Rec);
+                    CurrPage.PDFViewer.Page.LoadPdfFromBase64(GMDocumentSearch.ToBase64String(Rec));
+                end;
+
+            }
+        }
+    }
+
+    trigger OnOpenPage()
+    begin
+        CurrPage.Editable := NOT API;
+        CurrPage.SalesLines.Page.Editable := NOT API;
+    end;
+
+    trigger OnAfterGetRecord()
+    var
+        DimensionSetEntry: Record "Dimension Set Entry";
+    begin
+        ServiceDateIsPushedFromAPIVar := Rec.ServiceDateIsPushedFromAPI;
+        isAPI := Rec.API;
+        if API then begin
+            if (Rec.header_details_1 <> '') then begin
+                VField1 := true;
+                VField2 := true;
+            end;
+            if (Rec.header_details_2 <> '') then begin
+                VField3 := true;
+                VField4 := true;
+            end;
+            if (Rec.header_details_3 <> '') then begin
+                VField5 := true;
+                VField6 := true;
+            end;
+            if (Rec.header_details_4 <> '') then begin
+                VField7 := true;
+                VField8 := true;
+            end;
+            if (Rec.header_details_5 <> '') then begin
+                VField9 := true;
+                VField10 := true;
+            end;
+            if (Rec.header_details_6 <> '') then begin
+                VField11 := true;
+                VField12 := true;
+            end;
+            if (Rec.shipped_goods_details_7 <> '') then begin
+                VField13 := true;
+                VField14 := true;
+            end;
+            if (Rec.port_of_departure_label <> '') then begin
+                VField15 := true;
+                VField16 := true;
+            end;
+            if (Rec.port_of_destination_label <> '') then begin
+                VField17 := true;
+                VField18 := true;
+            end;
+            if rec."Pickup Date" <> 0D then
+                VField19 := true;
+            if rec."Delivery Date" <> 0D then
+                VField20 := true;
+        end else
+            SetFieldsVisibility();
+
+        if DimensionSetEntry.Get(rec."Dimension Set ID", 'C-ID') then begin
+            "C-ID" := DimensionSetEntry."Dimension Value Code";
+            DimensionSetEntry.CalcFields("Dimension Value Name");
+            "C-ID Name" := DimensionSetEntry."Dimension Value Name"
+        end;
+
+        CurrPage.PDFViewer.Page.LoadPdfFromBase64(GMDocumentSearch.ToBase64String(Rec));
+
+    end;
+
+    trigger OnDeleteRecord(): Boolean
+    var
+        CouldNotDeleteAPIOrderLbl: Label 'API Sales Orders could not be deleted';
+    begin
+        if Rec.API then Error(CouldNotDeleteAPIOrderLbl);
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    var
+        CouldNotModifyAPIOrderLbl: Label 'API Sales Orders could not be modified';
+    begin
+        if Rec.API then begin
+            if Rec.Status = xRec.Status then
+                Error(CouldNotModifyAPIOrderLbl);
+        end;
+
+    end;
+
+    local procedure SetFieldsVisibility()
+    var
+        SalesTypeModeSetup: Record "Sales Type Mode Setup";
+        TypeEnum: Enum "Shipment Or Service Type";
+        ModeEnum: Enum "Shipment Or Service Mode";
+    begin
+        TypeEnum := "Shipment Or Service Type"::None;
+        ModeEnum := "Shipment Or Service Mode"::None;
+
+        case Rec.Type of
+            'fcl':
+                TypeEnum := "Shipment Or Service Type"::fcl;
+            'lcl':
+                TypeEnum := "Shipment Or Service Type"::lcl;
+        end;
+
+        case Rec.Mode of
+            'air':
+                ModeEnum := "Shipment Or Service Mode"::air;
+            'rail':
+                ModeEnum := "Shipment Or Service Mode"::rail;
+            'sea':
+                ModeEnum := "Shipment Or Service Mode"::sea;
+            'seaAir':
+                ModeEnum := "Shipment Or Service Mode"::seaAir;
+        end;
+
+        if (TypeEnum <> "Shipment Or Service Type"::None) and (ModeEnum <> "Shipment Or Service Mode"::None) then begin
+
+            //tab Shipment Details
+
+            VField15 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'port_of_departure_label');
+            port_of_departure_label := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'port_of_departure_label');
+            VField16 := VField15;
+
+            VField17 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'port_of_destination_label');
+            port_of_destination_label := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'port_of_destination_label');
+            VField18 := VField17;
+
+            VField19 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'Pickup Date');
+
+            VField20 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'Delivery Date');
+
+            //tab Shipped Goods Details
+
+            VField1 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_1');
+            header_details_1 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_1');
+            VField2 := VField1;
+
+            VField3 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_2');
+            header_details_2 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_2');
+            VField4 := VField3;
+
+            VField5 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_3');
+            header_details_3 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_3');
+            VField6 := VField5;
+
+            VField7 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_4');
+            header_details_4 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_4');
+            VField8 := VField7;
+
+            VField9 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_5');
+            header_details_5 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_5');
+            VField10 := VField9;
+
+            VField11 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'header_details_6');
+            header_details_6 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'header_details_6');
+            VField12 := VField11;
+
+            VField13 := SalesTypeModeSetup.GetFieldVisibility(TypeEnum, ModeEnum, 'shipped_goods_details_7');
+            shipped_goods_details_7 := SalesTypeModeSetup.GetFieldCaption(TypeEnum, ModeEnum, 'shipped_goods_details_7');
+            VField14 := VField13;
+        end;
+    end;
+
+    var
+        GMDocumentSearch: Codeunit GMDocumentSearch;
+        VField1: Boolean;
+        VField2: Boolean;
+        VField3: Boolean;
+        VField4: Boolean;
+        VField5: Boolean;
+        VField6: Boolean;
+        VField7: Boolean;
+        VField8: Boolean;
+        VField9: Boolean;
+        VField10: Boolean;
+        VField11: Boolean;
+        VField12: Boolean;
+        VField13: Boolean;
+        VField14: Boolean;
+        VField15: Boolean;
+        VField16: Boolean;
+        VField17: Boolean;
+        VField18: Boolean;
+        VField19: Boolean;
+        VField20: Boolean;
+        "C-ID": Text;
+        "C-ID Name": Text;
+        ServiceDateIsPushedFromAPIVar: Boolean;
+        isAPI: Boolean;
+
+}
