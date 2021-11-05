@@ -5,9 +5,8 @@ codeunit 50309 interview1
         PurchDoc: Record "Purchase Header";
         PurchLine: Record "Purchase Line";
         PurchSetup: Record "Purchases & Payables Setup";
-    //PostPurch: Record Post??? ;
     begin
-        PurchSetup.Get(); //PurchSetup.Get() in BC 15 = GetPurchSetup() in BC 17 see codeunit90
+        PurchSetup.Get(); //PurchSetup.Get() in BC 15  GetPurchSetup() in BC 17 see codeunit90
         PurchDoc.SETRANGE("Document Type", PurchDoc."Document Type"::Order);
         PurchDoc.SETRANGE(Status, PurchDoc.Status::Released);
         if PurchDoc.FINDSET() then
@@ -22,7 +21,7 @@ codeunit 50309 interview1
                 PurchDoc.Receive := TRUE;
                 PurchDoc.Invoice := FALSE;
 
-                PostPurch.RUN(PurchDoc); //posting 
+                PostPurch.RUN(PurchDoc); //posting by codeunit PostPurch
             UNTIL PurchDoc.Next = 0;
     end;
 }
