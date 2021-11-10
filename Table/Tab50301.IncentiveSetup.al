@@ -39,12 +39,10 @@ table 50301 "Incentive Setup"
 
     trigger OnInsert()
     begin
-
     end;
 
     trigger OnModify()
     begin
-
     end;
 
     trigger OnDelete()
@@ -54,7 +52,6 @@ table 50301 "Incentive Setup"
 
     trigger OnRename()
     begin
-
     end;
 
 }
