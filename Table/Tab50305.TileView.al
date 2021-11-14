@@ -2,7 +2,6 @@ table 50305 DYTileView
 {
     Caption = 'DYTileView';
     DataClassification = ToBeClassified;
-
     fields
     {
         field(1; Number; Integer)
@@ -39,9 +38,7 @@ table 50305 DYTileView
     {
         fieldgroup(Brick; Bool1, No, Number, Inventory, Description, Image)
         {
-
         }
     }
-
 }
 

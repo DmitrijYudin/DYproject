@@ -1,14 +1,11 @@
 page 50306 DYTileView
 {
-
     Caption = 'DYTileView';
     PageType = List;
     SourceTable = DYTileView;
     ApplicationArea = All;
     UsageCategory = Lists;
     Editable = true;
-    //CardPageId = "Customer Card";
-
     layout
     {
         area(Content)
@@ -38,10 +35,7 @@ page 50306 DYTileView
                     ApplicationArea = All;
                     Style = StrongAccent;
                 }
-
-
             }
         }
     }
-
 }
