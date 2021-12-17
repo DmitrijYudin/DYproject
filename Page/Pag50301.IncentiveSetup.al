@@ -34,7 +34,7 @@ page 50301 "Incentive Setup"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
