@@ -169,17 +169,17 @@ page 50301 "Incentive Setup"
                     IncentiveSetup1: Record "Incentive Setup";
                     IncentiveSetup2: Record "Incentive Setup";
                 begin
-                    IncentiveSetup1.Init();
-                    IncentiveSetup2.Init();
-
                     IncentiveSetup1.FindFirst();
-                    IncentiveSetup2.FindFirst();
+                    //IncentiveSetup2.FindFirst();
+                    IncentiveSetup2.FindLast();
 
-                    IncentiveSetup1."Incentive Pecent" := 1; // в первой записи IncentiveSetup1."Incentive Pecent"= 1                    
-                    IncentiveSetup2."Incentive Pecent" := 2; // в первой записи IncentiveSetup2."Incentive Pecent"= 2
 
-                    IncentiveSetup1.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1
-                    IncentiveSetup2.Modify(); //в таблицу "Incentive Setup" переписали всю  IncentiveSetup1 и вывели на page Incentive Pecent = 1                    
+                    IncentiveSetup1."Incentive Pecent" := 1;
+                    IncentiveSetup2."Incentive Pecent" := 2;
+
+                    IncentiveSetup1.Modify();
+                    IncentiveSetup2.Modify();
+
                 end;
             }
             action("Issue 2")

@@ -18,12 +18,11 @@ pageextension 50301 PurchaseOrderListExt extends "Purchase Order List"
                 Visible = true;
                 ApplicationArea = all;
             }
-
-            // field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
-            // {
-            //     Visible = true;
-            //     ApplicationArea = all;
-            // }
+            field("Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
+            {
+                Visible = true;
+                ApplicationArea = all;
+            }
         }
     }
 }
