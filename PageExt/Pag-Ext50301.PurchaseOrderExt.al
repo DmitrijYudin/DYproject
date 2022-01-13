@@ -15,7 +15,6 @@ pageextension 50302 PurchaseOrderExt extends "Purchase Order" //OriginalId
                 Caption = 'Vendor Quality';
                 ApplicationArea = all;
             }
-
         }
     }
 }
