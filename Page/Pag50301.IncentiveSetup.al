@@ -170,8 +170,8 @@ page 50301 "Incentive Setup"
                     IncentiveSetup2: Record "Incentive Setup";
                 begin
                     IncentiveSetup1.FindFirst();
-                    //IncentiveSetup2.FindFirst();
-                    IncentiveSetup2.FindLast();
+                    IncentiveSetup2.FindFirst();
+                    //IncentiveSetup2.FindLast();
 
 
                     IncentiveSetup1."Incentive Pecent" := 1;
