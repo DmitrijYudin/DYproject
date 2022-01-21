@@ -5,14 +5,14 @@ table 50306 DYRecordTest
 
     fields
     {
-        field(1; "No."; Text[20])
+        field(1; "No."; Integer)
         {
             Caption = 'No.';
             DataClassification = ToBeClassified;
         }
-        field(2; "Record Text"; Text[250])
+        field(2; "Text field"; Text[250])
         {
-            Caption = 'Text';
+            Caption = 'Text field';
             DataClassification = ToBeClassified;
         }
     }
