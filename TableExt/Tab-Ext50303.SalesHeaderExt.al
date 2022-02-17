@@ -14,4 +14,10 @@ tableextension 50303 SalesHeaderExt extends "Sales Header"
         }
 
     }
+    keys
+    {
+        key(key1; isAPI)
+        {
+        }
+    }
 }

@@ -1,6 +1,3 @@
-/// <summary>
-/// TableExtension ItemExt (ID 50301) extends Record Item.
-/// </summary>
 tableextension 50301 ItemExt extends Item
 {
     fields
@@ -16,5 +13,4 @@ tableextension 50301 ItemExt extends Item
             DataClassification = ToBeClassified;
         }
     }
-
 }

@@ -24,14 +24,14 @@ codeunit 50308 TerminatePostPurchaseDoc
         PurchaseLine.Reset();
         PurchaseLine.SetFilter("Document Type", '=%1', PurchaseHeader."Document Type");
         PurchaseLine.SetFilter("Document No.", '=%1', PurchaseHeader."No.");
-        if PurchaseLine.FindSet() then
+        if PurchaseLine.FindSet(true, true) then
             repeat
                 DYTemp.Init();
                 DYTemp."No." := PurchaseLine."No.";
                 DYTemp."Item Status Approved" := PurchaseLine."DY Item Approval Status";
                 DYTemp."Record No" := DYTemp.count;
                 DYTemp.Insert();
-            until PurchaseLine.Next() = 0;
+            until PurchaseLine.Next() = 0
     end;
 }
 

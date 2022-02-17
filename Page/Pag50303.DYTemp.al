@@ -26,8 +26,17 @@ page 50303 DYTemp
                 {
                     ApplicationArea = All;
                 }
+                field("Customer Name 1"; Rec."Customer Name 1")
+                {
+                    ToolTip = 'Specifies the value of the Customer Name 1 field.';
+                    ApplicationArea = All;
+                }
+                field("Customer Name 2"; Rec."Customer Name 2")
+                {
+                    ToolTip = 'Specifies the value of the Customer Name 2 field.';
+                    ApplicationArea = All;
+                }
             }
         }
     }
-
 }

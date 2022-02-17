@@ -7,6 +7,6 @@ codeunit 50300 "Fined The Right Way"
         AccSchedCellValue: Record "Acc. Sched. Cell Value";
         AccSchedChartSetupLine: Record "Acc. Sched. Chart Setup Line";
     begin
-        CustomerVar.Find()
-    end;
+        CustomerVar.Find();
+     end;
 }
