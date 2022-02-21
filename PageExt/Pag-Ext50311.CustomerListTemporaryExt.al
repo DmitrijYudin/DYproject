@@ -86,6 +86,78 @@ pageextension 50311 "Customer List Temporary Ext" extends "Customer List"
                     end;
                 end;
             }
+            action("SetCurrentKey")
+            {
+                Caption = 'SetCurrentKey';
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                    Rec.Reset();
+                    //Rec.SetCurrentKey("No.");
+                    Rec.SetRange("No.");
+                    if Rec.FindFirst() then
+                        Message(Format(Rec."No."));
+
+
+                    Rec.Reset();
+                    //Rec.SetCurrentKey("No.");
+                    Rec.SetRange("No.");
+                    Rec.SetAscending("No.", false);
+
+                    if Rec.FindFirst() then begin
+                        Message(Format(Rec."No."));
+                    end;
+
+                end;
+            }
+
+            action("RecordRef Open")
+            {
+                Caption = 'RecordRef Open';
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    MyRecordRef: RecordRef;
+                    Text000: Label 'The %1 table contains %2 records.';
+                begin
+                    MyRecordRef.Open(Database::Customer);
+                    Message(Text000, MyRecordRef.Caption, MyRecordRef.Count);
+                    MyRecordRef.Close;
+                end;
+            }
+            action("RecordRef GetTable")
+            {
+                Caption = 'RecordRef Get';
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    Customer: Record Customer;
+                    CustomerRef: RecordRef;
+                    CustomerFieldRef: FieldRef;
+                    Text000: Label 'The %1 table contains %2 records.';
+                begin
+                    Customer.Get('10000');
+                    CustomerRef.GetTable(Customer);
+                    CustomerFieldRef := CustomerRef.Field(4);
+                    CustomerFieldRef.Validate('Ref GetTable');
+                    CustomerRef.Modify()
+                end;
+            }
+            action("Calc Date")
+            {
+                Caption = 'Calc Date';
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    Text000: Label 'Today %1 \Yesterday %2';
+                begin
+                    Message(Text000, FORMAT(Today), FORMAT(CalcDate('-1D', Today)));
+                end;
+            }
         }
     }
 }
